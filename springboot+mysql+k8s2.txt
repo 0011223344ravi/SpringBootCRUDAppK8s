@@ -1,0 +1,29 @@
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>kubectl delete service springboot-k8s-svc
+service "springboot-k8s-svc" deleted
+
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>kubectl apply -f deployment.yaml
+deployment.apps/spring-boot-k8s created
+
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>kubectl apply -f service.yaml
+service/springboot-k8s-svc created
+
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>kubectl get service
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes           ClusterIP   10.96.0.1       <none>        443/TCP          41d
+springboot-k8s-svc   NodePort    10.108.49.220   <none>        8080:31246/TCP   6s
+
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>kubectl get deployment
+NAME              READY   UP-TO-DATE   AVAILABLE   AGE
+spring-boot-k8s   2/2     2            2           39s
+
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>minikube service springboot-k8s-svc --url
+http://127.0.0.1:63124
+! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
+
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>minikube dashboard
+* Verifying dashboard health ...
+* Launching proxy ...
+* Verifying proxy health ...
+* Opening http://127.0.0.1:63381/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
+^C
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>

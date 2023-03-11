@@ -1,0 +1,346 @@
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+docker-env: in-use
+
+
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>minikube stop
+* Stopping node "minikube"  ...
+* Powering off "minikube" via SSH ...
+* 1 node stopped.
+
+C:\Youtube\EnggAdda\Project\March\k8sdemo-deployment-file>cd ..
+
+C:\Youtube\EnggAdda\Project\March>cd SpringBootCRUDAppK8s
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>minikube start --driver=docker
+* minikube v1.26.0 on Microsoft Windows 11 Home Single Language 10.0.22621 Build 22621
+  - MINIKUBE_ACTIVE_DOCKERD=minikube
+* minikube 1.29.0 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.29.0
+* To disable this notice, run: 'minikube config set WantUpdateNotification false'
+
+* Using the docker driver based on existing profile
+* Starting control plane node minikube in cluster minikube
+* Pulling base image ...
+* Noticed you have an activated docker-env on docker driver in this terminal:
+! Please re-eval your docker-env, To ensure your environment variables have updated ports:
+
+        'minikube -p minikube docker-env'
+
+
+* Restarting existing docker container for "minikube" ...
+* Preparing Kubernetes v1.24.1 on Docker 20.10.17 ...
+* Verifying Kubernetes components...
+  - Using image kubernetesui/dashboard:v2.6.0
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  - Using image kubernetesui/metrics-scraper:v1.0.8
+* Enabled addons: default-storageclass, storage-provisioner, dashboard
+* Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+docker-env: in-use
+
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>minikube docker-env
+SET DOCKER_TLS_VERIFY=1
+SET DOCKER_HOST=tcp://127.0.0.1:49712
+SET DOCKER_CERT_PATH=C:\Users\00112\.minikube\certs
+SET MINIKUBE_ACTIVE_DOCKERD=minikube
+REM To point your shell to minikube's docker-daemon, run:
+REM @FOR /f "tokens=*" %i IN ('minikube -p minikube docker-env --shell cmd') DO @%i
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>@FOR /f "tokens=*" %i IN ('minikube -p minikube docker-env --shell cmd') DO @%i
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+docker-env: in-use
+
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>docker images
+REPOSITORY                                TAG       IMAGE ID       CREATED         SIZE
+kubernetesui/dashboard                    <none>    1042d9e0d8fc   9 months ago    246MB
+kubernetesui/metrics-scraper              <none>    115053965e86   9 months ago    43.8MB
+k8s.gcr.io/kube-apiserver                 v1.24.1   e9f4b425f919   9 months ago    130MB
+k8s.gcr.io/kube-controller-manager        v1.24.1   b4ea7e648530   9 months ago    119MB
+k8s.gcr.io/kube-proxy                     v1.24.1   beb86f5d8e6c   9 months ago    110MB
+k8s.gcr.io/kube-scheduler                 v1.24.1   18688a72645c   9 months ago    51MB
+openjdk                                   17        5e28ba2b4cdb   10 months ago   471MB
+k8s.gcr.io/etcd                           3.5.3-0   aebe758cef4c   10 months ago   299MB
+k8s.gcr.io/pause                          3.7       221177c6082a   12 months ago   711kB
+k8s.gcr.io/coredns/coredns                v1.8.6    a4ca41631cc7   17 months ago   46.8MB
+k8s.gcr.io/pause                          3.6       6270bb605e12   18 months ago   683kB
+gcr.io/k8s-minikube/storage-provisioner   v5        6e38f40d628d   23 months ago   31.5MB
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>kubectl apply -f db-deployment.yaml
+persistentvolumeclaim/mysql-pv-claim created
+deployment.apps/mysql created
+service/mysql created
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>kubectl get deployments
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+mysql   0/1     1            0           18s
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>docker images
+REPOSITORY                                TAG       IMAGE ID       CREATED         SIZE
+kubernetesui/dashboard                    <none>    1042d9e0d8fc   9 months ago    246MB
+kubernetesui/metrics-scraper              <none>    115053965e86   9 months ago    43.8MB
+k8s.gcr.io/kube-apiserver                 v1.24.1   e9f4b425f919   9 months ago    130MB
+k8s.gcr.io/kube-controller-manager        v1.24.1   b4ea7e648530   9 months ago    119MB
+k8s.gcr.io/kube-proxy                     v1.24.1   beb86f5d8e6c   9 months ago    110MB
+k8s.gcr.io/kube-scheduler                 v1.24.1   18688a72645c   9 months ago    51MB
+openjdk                                   17        5e28ba2b4cdb   10 months ago   471MB
+k8s.gcr.io/etcd                           3.5.3-0   aebe758cef4c   10 months ago   299MB
+k8s.gcr.io/pause                          3.7       221177c6082a   12 months ago   711kB
+k8s.gcr.io/coredns/coredns                v1.8.6    a4ca41631cc7   17 months ago   46.8MB
+k8s.gcr.io/pause                          3.6       6270bb605e12   18 months ago   683kB
+gcr.io/k8s-minikube/storage-provisioner   v5        6e38f40d628d   23 months ago   31.5MB
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>docker images
+REPOSITORY                                TAG       IMAGE ID       CREATED         SIZE
+mysql                                     5.7       be16cf2d832a   4 weeks ago     455MB
+kubernetesui/dashboard                    <none>    1042d9e0d8fc   9 months ago    246MB
+kubernetesui/metrics-scraper              <none>    115053965e86   9 months ago    43.8MB
+k8s.gcr.io/kube-apiserver                 v1.24.1   e9f4b425f919   9 months ago    130MB
+k8s.gcr.io/kube-controller-manager        v1.24.1   b4ea7e648530   9 months ago    119MB
+k8s.gcr.io/kube-scheduler                 v1.24.1   18688a72645c   9 months ago    51MB
+k8s.gcr.io/kube-proxy                     v1.24.1   beb86f5d8e6c   9 months ago    110MB
+openjdk                                   17        5e28ba2b4cdb   10 months ago   471MB
+k8s.gcr.io/etcd                           3.5.3-0   aebe758cef4c   10 months ago   299MB
+k8s.gcr.io/pause                          3.7       221177c6082a   12 months ago   711kB
+k8s.gcr.io/coredns/coredns                v1.8.6    a4ca41631cc7   17 months ago   46.8MB
+k8s.gcr.io/pause                          3.6       6270bb605e12   18 months ago   683kB
+gcr.io/k8s-minikube/storage-provisioner   v5        6e38f40d628d   23 months ago   31.5MB
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>kubectl get deployments
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+mysql   1/1     1            1           66s
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>kubectl get service
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP    41d
+mysql        ClusterIP   None         <none>        3306/TCP   76s
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>kubectl get pods
+NAME                     READY   STATUS    RESTARTS   AGE
+mysql-68dc5c4957-z49fx   1/1     Running   0          2m54s
+
+C:\Youtube\EnggAdda\Project\March\SpringBootCRUDAppK8s>kubectl exec -it mysql-68dc5c4957-z49fx /bin/bash
+kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
+bash-4.2# mysql -h mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.7.41 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show database
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| EnggAdda           |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use EnggAdda
+Database changed
+mysql>
+mysql>
+mysql> use sys
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> use EnggAdda
+Database changed
+mysql> use sys
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> use EnggAdda
+Database changed
+mysql> show mysql
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql' at line 1
+mysql> show tables
+    -> ;
+Empty set (0.00 sec)
+
+mysql> ^C
+mysql> ^C
+mysql> use sys
+No connection. Trying to reconnect...
+Connection id:    3
+Current database: *** NONE ***
+
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables
+    -> ;
++-----------------------------------------------+
+| Tables_in_sys                                 |
++-----------------------------------------------+
+| host_summary                                  |
+| host_summary_by_file_io                       |
+| host_summary_by_file_io_type                  |
+| host_summary_by_stages                        |
+| host_summary_by_statement_latency             |
+| host_summary_by_statement_type                |
+| innodb_buffer_stats_by_schema                 |
+| innodb_buffer_stats_by_table                  |
+| innodb_lock_waits                             |
+| io_by_thread_by_latency                       |
+| io_global_by_file_by_bytes                    |
+| io_global_by_file_by_latency                  |
+| io_global_by_wait_by_bytes                    |
+| io_global_by_wait_by_latency                  |
+| latest_file_io                                |
+| memory_by_host_by_current_bytes               |
+| memory_by_thread_by_current_bytes             |
+| memory_by_user_by_current_bytes               |
+| memory_global_by_current_bytes                |
+| memory_global_total                           |
+| metrics                                       |
+| processlist                                   |
+| ps_check_lost_instrumentation                 |
+| schema_auto_increment_columns                 |
+| schema_index_statistics                       |
+| schema_object_overview                        |
+| schema_redundant_indexes                      |
+| schema_table_lock_waits                       |
+| schema_table_statistics                       |
+| schema_table_statistics_with_buffer           |
+| schema_tables_with_full_table_scans           |
+| schema_unused_indexes                         |
+| session                                       |
+| session_ssl_status                            |
+| statement_analysis                            |
+| statements_with_errors_or_warnings            |
+| statements_with_full_table_scans              |
+| statements_with_runtimes_in_95th_percentile   |
+| statements_with_sorting                       |
+| statements_with_temp_tables                   |
+| sys_config                                    |
+| user_summary                                  |
+| user_summary_by_file_io                       |
+| user_summary_by_file_io_type                  |
+| user_summary_by_stages                        |
+| user_summary_by_statement_latency             |
+| user_summary_by_statement_type                |
+| version                                       |
+| wait_classes_global_by_avg_latency            |
+| wait_classes_global_by_latency                |
+| waits_by_host_by_latency                      |
+| waits_by_user_by_latency                      |
+| waits_global_by_latency                       |
+| x$host_summary                                |
+| x$host_summary_by_file_io                     |
+| x$host_summary_by_file_io_type                |
+| x$host_summary_by_stages                      |
+| x$host_summary_by_statement_latency           |
+| x$host_summary_by_statement_type              |
+| x$innodb_buffer_stats_by_schema               |
+| x$innodb_buffer_stats_by_table                |
+| x$innodb_lock_waits                           |
+| x$io_by_thread_by_latency                     |
+| x$io_global_by_file_by_bytes                  |
+| x$io_global_by_file_by_latency                |
+| x$io_global_by_wait_by_bytes                  |
+| x$io_global_by_wait_by_latency                |
+| x$latest_file_io                              |
+| x$memory_by_host_by_current_bytes             |
+| x$memory_by_thread_by_current_bytes           |
+| x$memory_by_user_by_current_bytes             |
+| x$memory_global_by_current_bytes              |
+| x$memory_global_total                         |
+| x$processlist                                 |
+| x$ps_digest_95th_percentile_by_avg_us         |
+| x$ps_digest_avg_latency_distribution          |
+| x$ps_schema_table_statistics_io               |
+| x$schema_flattened_keys                       |
+| x$schema_index_statistics                     |
+| x$schema_table_lock_waits                     |
+| x$schema_table_statistics                     |
+| x$schema_table_statistics_with_buffer         |
+| x$schema_tables_with_full_table_scans         |
+| x$session                                     |
+| x$statement_analysis                          |
+| x$statements_with_errors_or_warnings          |
+| x$statements_with_full_table_scans            |
+| x$statements_with_runtimes_in_95th_percentile |
+| x$statements_with_sorting                     |
+| x$statements_with_temp_tables                 |
+| x$user_summary                                |
+| x$user_summary_by_file_io                     |
+| x$user_summary_by_file_io_type                |
+| x$user_summary_by_stages                      |
+| x$user_summary_by_statement_latency           |
+| x$user_summary_by_statement_type              |
+| x$wait_classes_global_by_avg_latency          |
+| x$wait_classes_global_by_latency              |
+| x$waits_by_host_by_latency                    |
+| x$waits_by_user_by_latency                    |
+| x$waits_global_by_latency                     |
++-----------------------------------------------+
+101 rows in set (0.01 sec)
+
+mysql> use enggadda
+ERROR 1049 (42000): Unknown database 'enggadda'
+mysql> use EnggAdda
+Database changed
+mysql> show tables
+    -> ;
++--------------------+
+| Tables_in_EnggAdda |
++--------------------+
+| product            |
++--------------------+
+1 row in set (0.01 sec)
+
+mysql> select * from product
+    -> ;
+Empty set (0.00 sec)
+
+mysql> select * from product
+    -> ;
++----+--------+-------+----------+
+| id | name   | price | quantity |
++----+--------+-------+----------+
+|  1 | Bulb   |   200 |        2 |
+|  2 | Mobile | 20000 |        1 |
++----+--------+-------+----------+
+2 rows in set (0.01 sec)
+
+mysql>
